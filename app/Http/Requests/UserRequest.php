@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
             'email' =>'required | email ',
             'age' =>'required',
             'course' =>'required',
-            'file' => 'required'
+            
         ];
     }
 }

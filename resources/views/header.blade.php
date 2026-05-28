@@ -14,9 +14,13 @@
                 <li>
                     <a href="{{ route('students.create') }}" class="hover:bg-gray-500 block p-2">Add Student</a>
                 </li>
-                {{-- <li>
-                    <a href="#" class="hover:bg-gray-500 block p-2">Update Student</a>
+                 <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="hover:bg-gray-500 block p-2 cursor-pointer"> Logout</button>
+                    </form>
                 </li>
+                {{--
                 <li>
                     <a href="#" class="hover:bg-gray-500 block p-2">Delete Student</a>
                 </li> --}}

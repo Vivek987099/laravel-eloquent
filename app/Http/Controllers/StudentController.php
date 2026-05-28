@@ -16,7 +16,6 @@ class StudentController extends Controller
     public function index()
     {   
         $students = student::with('course') -> get();
-        // return $students ;
         return view('welcome',['students'=>$students]);
     }
 
@@ -69,7 +68,6 @@ class StudentController extends Controller
     public function update(UserRequest $request, student $student)
     {   
 
-
         $newFilePath = null;
         $std = student::find($student -> id);
         $course = Course::find($student -> course_id);
@@ -80,8 +78,6 @@ class StudentController extends Controller
         if($request -> file('file')){
             $newFilePath = $request -> file('file') -> store('image','public');
         }
-
-
         
         $std -> name = $request -> name;
         $std -> age = $request -> age;

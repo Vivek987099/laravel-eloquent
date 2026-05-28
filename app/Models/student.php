@@ -18,14 +18,10 @@ class student extends Model
         return $this->belongsTo(Course::class);
     }
 
-    // public function setNameAttribute($value){
-    //     $this -> attributes['name'] = ucwords($value);
-    // }
-
-    protected function Name() : Attribute{
-        return Attribute::make(
-            set:fn(stirng $value) => ucwords($value)
-        );
+    public function setNameAttribute($value){
+        $this -> attributes['name'] = ucwords($value);
     }
+
+    
 
 }

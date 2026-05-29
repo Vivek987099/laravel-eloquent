@@ -23,7 +23,7 @@ Route::middleware(['auth']) -> group(function(){
    Route::resource('students',StudentController::class);
 });
 
-Route::middleware(['auth',RoleCheckMiddleware::class . ':user']) -> group(function(){
+Route::middleware(['auth',RoleCheckMiddleware::class . ':admin']) -> group(function(){
    Route::resource('courses',CourseController::class) ;
    Route::resource('users',UserController::class);
 });

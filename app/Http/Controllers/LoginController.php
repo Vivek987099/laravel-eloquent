@@ -16,7 +16,7 @@ class LoginController extends Controller
         if(Auth::attempt($credential)){
             return redirect() -> route('students.index');
         }else{
-            return redirect() -> route('login');
+            return redirect() -> route('login') -> with('status', 'Invalid email or password');
         }
 
     }

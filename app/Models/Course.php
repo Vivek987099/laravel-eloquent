@@ -12,8 +12,13 @@ class Course extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function setNameAttribute($value){
+        $this -> attributes['name'] = strtoupper($value);
+    }
+
     public function students()
-{
-    return $this->hasMany(student::class);
-}
+    {
+        return $this->hasMany(student::class);
+    }
 }

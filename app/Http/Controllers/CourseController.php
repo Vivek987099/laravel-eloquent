@@ -12,7 +12,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return Course::all();
+        $courses = Course::withCount('students') -> get();
+        // return $courses;
+        return view('courses',compact('courses'));
     }
 
     /**
@@ -20,7 +22,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('add-course');
     }
 
     /**
@@ -28,7 +30,21 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request -> validate([
+            'name'=>'required',
+            'duration'=>'required'
+        ]);
+
+        $course = new Course();
+        $course -> name = $request -> name;
+        $course -> duration = $request -> duration;
+        $course -> description = $request -> description;
+        
+        if($course -> save()){
+            return redirect() -> route('courses.index') -> with('status','New course added successfully');
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -44,7 +60,8 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $course = Course::find($id);
+        return view('update-course-form',compact('course'));
     }
 
     /**
@@ -52,7 +69,19 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request -> validate([
+            'name' => 'required',
+            'duration' => 'required'
+        ]);
+        $course = Course::find($id);
+        $course -> name = $request -> name;
+        $course -> duration = $request -> duration;
+        $course -> description = $request -> description;
+        if($course -> save()){
+            return redirect() -> route('courses.index') -> with('status','Course Updated successfully');
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -60,6 +89,11 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $course = Course::find($id);
+        if($course -> delete()){
+            return redirect() -> route('courses.index') -> with('status','Course deleted successfully');
+        }else{
+            return back();
+        }
     }
 }

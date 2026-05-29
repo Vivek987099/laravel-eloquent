@@ -7,7 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User || Login</title>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900">
+<body class="bg-linear-to-r from-[#FBE8CE] to-[#C3CC9B] dark:bg-gray-900">
+        @session('status')
+         <h1 class="bg-red-200 text-red-700 outline-1 outline-red-700 p-4 rounded-2xl text-lg w-100 mt-2 fixed top-5 right-5 "> {{ session('status') }} </h1>   
+        @endsession
     <div class="w-[80%] mx-auto my-40">
 
         {{-- login form --}}

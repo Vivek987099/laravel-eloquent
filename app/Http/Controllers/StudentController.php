@@ -25,7 +25,7 @@ class StudentController extends Controller
     public function create()
     {   
         $courses = Course::all();
-        return view('add-user',compact('courses'));
+        return view('add-student',compact('courses'));
     }
 
     /**
@@ -50,7 +50,9 @@ class StudentController extends Controller
      */
     public function show(student $student)
     {   
-        return student::find($student -> id);
+        $student = student::find($student -> id);
+        // return $student;
+        return view('single-student',compact('student'));
     }
 
     /**
@@ -67,23 +69,27 @@ class StudentController extends Controller
      */
     public function update(UserRequest $request, student $student)
     {   
-
-        $newFilePath = null;
         $std = student::find($student -> id);
-        $course = Course::find($student -> course_id);
-        if(!empty($std -> file)){
-            $oldFilePath = public_path('storage/'). $std ->file;
-            unlink($oldFilePath);
-        }
+        $course = Course::find($request -> course);
+
+        $filePath = $std -> file;
+
+       
+        // delete old file if it is
         if($request -> file('file')){
-            $newFilePath = $request -> file('file') -> store('image','public');
+            if(!empty($std -> file && $student->file != null)){
+                $oldFilePath = public_path('storage/'). $std ->file;
+                if(file_exists($oldFilePath)){
+                    unlink($oldFilePath);
+                }
+                $filePath = $request -> file('file') -> store('image','public');
+            }
         }
-        
         $std -> name = $request -> name;
         $std -> age = $request -> age;
         $std -> email = $request -> email;
         $std -> course_id = $course -> id;
-        $std -> file = $newFilePath;
+        $std -> file = $filePath;
         
         $std -> save();
         return redirect() -> route('students.index') -> with('status','Student updated successfully');
